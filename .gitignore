@@ -262,3 +262,8 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+src/.vscode/.BROWSE.VC.DB
+*.DB-shm
+src/main/engine/.vscode/.BROWSE.VC.DB-wal
+*.DB
+src/.vscode/.BROWSE.VC.DB-wal

@@ -1,87 +1,50 @@
-Cannonball - OutRun Engine
-==========================
+Ported to the Amiga by Modern Vintage Gamer 2017
 
-See [Reassembler Blog](http://reassembler.blogspot.co.uk/).
 
-Credits
--------
+Requirements
+============
 
-* Chris White - Project creator.
-* Arun Horne  - Cross platform work.
+- A very very fast Classic Amiga. Vampire 2 with Gold 2 core or better
+recommended :)
+- Picasso96 RTG.
 
-Getting Started
----------------
 
-Cannonball has been successfully built for Windows, Mac OS X, Linux, Open Pandora and the Raspberry Pi. 
+Installation
+============
 
-* Install your favourite C++ environment (e.g. GCC, Visual Studio, Xcode, MingGW etc.)
-* Install [CMake](http://www.cmake.org/). This generates your platform and compiler build files. 
-* Extract the [Boost Library](http://www.boost.org/) somewhere, for example: c:\coding\lib\boost_1_51_0
-* Extract the [SDL Library](http://www.libsdl.org/download-1.2.php) somewhere, for example: c:\coding\lib\SDL-1.2.15
-* Read the SDL documentation & compile the SDL Library for your system.
-* Windows only, download and install the [Direct 8.1 SDK](http://stackoverflow.com/questions/5192384/looking-for-the-old-directx-8-1-sdk)
-* Extract the Cannonball code somewhere, for example: c:\coding\cannonball
-* You may need to create a .cmake file for your system to configure specific options. See the cmake subdirectory for more details. If not, the default.cmake file will be used.
+- Install anywhere on your Amiga. 
+- You need Outrun Revision B ROM files. They go in the ROMS subfolder.
 
-Build
------
+Controls
+========
 
-* Run CMake to generate the relevant build files for your compiler. You can optionally pass -DTARGET=filename to pass a custom .cmake file
-* Compile using your chosen compiler. Further details below.
+Keyboard
 
-###
+5 - Insert Coin
+1 - Start Game
+Z - Accelerate
+X - Brake
+Space - Change Gears
+Cursor Left/Right - Move Car
 
-    mkdir build
-    cd build
+or Plug Joystick in Port 2
 
-### Non-IDE (e.g. straight GCC)
-    
-    cmake -G "Insert Generator Name Here" ../cmake
-    make
+Button 1 - Accelerate
+Button 2 - Brake
+Up - Change Gears
+Left - Move Car Left
+Right - Move Car Right
 
-### MinGW
+ESC - Quit to Workbench
 
-    cmake -G "MinGW Makefiles" -DTARGET=mingw ../cmake
-    mingw32-make
-    
-### Visual Studio 2010
 
-    cmake -G "Visual Studio 10" ../cmake
+Compiling
+=========
 
-### Mac OSX
+Download and Install AmiDevCpp, open the CannonBall.dev project file and compile the code.
 
-    cmake -G "Unix Makefiles" -DTARGET:STRING=macosx ../cmake
-    make
+Credits and Thanks
+==================
 
-* Copy SDL.DLL and the roms subdirectory to the build directory.
-* Right click the 'cannonball' project in the IDE and choose 'Set as StartUp project'. 
-* You can then compile, debug and run from Visual Studio as expected.
-
-Run
----
-
-* Copy the OutRun revision B romset to the roms subdirectory. Rename the files if necessary.
-* Copy or link the roms subdirectory to whereever your executable resides.
-
-###
-
-    ln -s ../roms roms
-    ./outrun
-    
-    
-Building SDL-1.2.15
--------------------
-
-### Darwin
-
-    ./configure --prefix=~/SDL-1.2.15/build --disable-assembly
-
-### MinGW
-
-See: [Setting up MSYS MinGW build system for compiling SDL OpenGL applications](http://blog.pantokrator.net/2006/08/08/setting-up-msysmingw-build-system-for-compiling-sdlopengl-applications/).
-
-Execute the below commands from the msys environment.
-    
-    ./configure --prefix=/mingw --enable-stdio-redirect=no
-    make
-    make install
+Chris White - CannonBall Engine http://reassembler.blogspot.com
+Apollo Accelerators Team - http://www.apollo-accelerators.com
