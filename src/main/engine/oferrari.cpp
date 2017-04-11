@@ -17,6 +17,7 @@
     See license.txt for more details.
 ***************************************************************************/
 
+
 #include "engine/oanimseq.hpp"
 #include "engine/oattractai.hpp"
 #include "engine/obonus.hpp"
@@ -29,6 +30,12 @@
 #include "engine/outils.hpp"
 #include "engine/oferrari.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
+#include "Sound.h"
 OFerrari oferrari;
 
 OFerrari::OFerrari(void)

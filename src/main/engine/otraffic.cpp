@@ -18,6 +18,10 @@
 #include "engine/outils.hpp"
 #include "engine/ostats.hpp"
 #include "engine/otraffic.hpp"
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
 
 OTraffic otraffic;
 

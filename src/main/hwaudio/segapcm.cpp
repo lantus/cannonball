@@ -88,7 +88,7 @@ void SegaPCM::init(int32_t fps)
 {
     int FREQ = 44100;
     downsample = (32000.0 / (double) FREQ);
-    SoundChip::init(STEREO, FREQ, fps);
+    SoundChip::init(STEREO, 44100, fps);
 }
 
 void SegaPCM::stream_update()
@@ -96,7 +96,7 @@ void SegaPCM::stream_update()
     SoundChip::clear_buffer();
 
     // loop over channels
-    for (int ch = 0; ch < 16; ch++)
+    for (int ch = 0; ch < 4; ch++)
     {
         uint8_t *regs = ram + 8 * ch;
 

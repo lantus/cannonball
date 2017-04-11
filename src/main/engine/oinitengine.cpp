@@ -30,6 +30,11 @@
 #include "engine/otraffic.hpp"
 #include "engine/oinitengine.hpp"
 
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
+
 OInitEngine oinitengine;
 
 // Continuous Mode Level Ordering

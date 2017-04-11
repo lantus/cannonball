@@ -39,6 +39,13 @@
 #include <cstdlib> 
 #include <time.h>
 
+#include "stdint.hpp"
+
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 #include "engine/oattractai.hpp"
 #include "engine/oferrari.hpp"
 #include "engine/oinputs.hpp"

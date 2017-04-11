@@ -21,6 +21,8 @@
 #include "engine/osprites.hpp"
 #include "engine/otraffic.hpp"
 #include "engine/ozoom_lookup.hpp"
+#include "engine/oroad.hpp"
+#include "engine/oinitengine.hpp"
 
 OSprites osprites;
 
@@ -387,8 +389,9 @@ void OSprites::do_spr_order_shadows(oentry* input)
         spr_cnt_main++;
     }
 
+#if !defined (_AMIGA_)
     // Code to handle shadows under sprites
-    // test_shadow: 
+    // test_shadow:
     if (!(input->control & SHADOW)) return;
 
     // LayOut specific fix to avoid memory crash on over populated scenery segments
@@ -397,14 +400,14 @@ void OSprites::do_spr_order_shadows(oentry* input)
 
     input->dst_index = spr_cnt_shadow;
     spr_cnt_shadow++;                       // Increment total shadow count
-    
+
     uint8_t pal_dst = input->pal_dst;       // Backup Sprite Colour Palette
     uint8_t shadow = input->shadow;         // and priority and shadow settings
     int16_t x = input->x;                   // and x position
     uint32_t addr = input->addr;            // and original sprite data address
     input->pal_dst = 0;                     // clear colour palette
     input->shadow = 7;                      // Set NEW priority & shadow settings
-    
+
     input->x += (input->road_priority * shadow_offset) >> 9; // d0 = sprite z / distance into screen
 
     if (input->control & TRAFFIC_SPRITE)
@@ -418,11 +421,12 @@ void OSprites::do_spr_order_shadows(oentry* input)
     }
 
     do_sprite(input);           // Create Shadowed Version Of Sprite For Hardware
-    
+
     input->pal_dst = pal_dst;   // Restore Sprite Colour Palette
     input->shadow = shadow;     // ...and other values
     input->x = x;
     input->addr = addr;
+#endif    
 }
 
 // Sprite Copying Routine

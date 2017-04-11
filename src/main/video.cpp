@@ -15,6 +15,7 @@
 #include "setup.hpp"
 #include "globals.hpp"
 #include "frontend/config.hpp"
+#include "engine/oinitengine.hpp"
 
 #ifdef WITH_OPENGL
 
@@ -122,6 +123,7 @@ void Video::disable()
 
 int Video::set_video_mode(video_settings_t* settings)
 {
+     
     if (settings->widescreen)
     {
         config.s16_width  = S16_WIDTH_WIDE;
@@ -171,8 +173,12 @@ void Video::draw_frame()
         tile_layer->update_tile_values();
 
         (hwroad.*hwroad.render_background)(pixels);
-        tile_layer->render_tile_layer(pixels, 1, 0);      // background layer
-        tile_layer->render_tile_layer(pixels, 0, 0);      // foreground layer
+        if (outrun.game_state == 7)
+        {
+            tile_layer->render_tile_layer(pixels, 1, 0);      // background layer
+            tile_layer->render_tile_layer(pixels, 0, 0);      // foreground layer
+        }
+        
         (hwroad.*hwroad.render_foreground)(pixels);
         sprite_layer->render(8);
         tile_layer->render_text_layer(pixels, 1);

@@ -6,6 +6,8 @@
     See license.txt for more details.
 ***************************************************************************/
 
+#include "stdint.hpp"
+
 #ifdef SDL2
 #include "sdl2/input.hpp"
 #else
@@ -20,6 +22,11 @@
 #include "engine/omap.hpp"
 #include "engine/ostats.hpp"
 #include "engine/otiles.hpp"
+
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
 
 // Track Selection: Ferrari Position Per Track
 // This is a link to a sprite object that represents part of the course map.

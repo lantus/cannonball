@@ -56,7 +56,7 @@ private:
     const static int32_t MESSAGE_TIME = 5;
 
     // Message text
-    std::string msg;
+    //std::string msg;
 
     // Cursor
     int16_t cursor;

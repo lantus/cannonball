@@ -70,3 +70,4 @@ private:
 
 extern OBonus obonus;
 
+

@@ -240,7 +240,7 @@ void HWRoad::render_background_lores(uint16_t* pixels)
     int x, y;
     uint16_t* roadram = ramBuff;
 
-    for (y = 0; y < S16_HEIGHT; y++) 
+    for (y = 0; y < S16_HEIGHT; y++)
     {
         int data0 = roadram[0x000 + y];
         int data1 = roadram[0x100 + y];
@@ -248,7 +248,7 @@ void HWRoad::render_background_lores(uint16_t* pixels)
         int color = -1;
 
         // based on the info->control, we can figure out which sky to draw
-        switch (road_control & 3) 
+        switch (road_control & 3)
         {
             case 0:
                 if (data0 & 0x800)
@@ -276,11 +276,11 @@ void HWRoad::render_background_lores(uint16_t* pixels)
         }
 
         // fill the scanline with color
-        if (color != -1) 
+        if (color != -1)
         {
             uint16_t* pPixel = pixels + (y * config.s16_width);
             color |= color_offset3;
-            
+
             for (x = 0; x < config.s16_width; x++)
                 *(pPixel)++ = color;
         }

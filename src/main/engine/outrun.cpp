@@ -32,6 +32,10 @@
 #include "engine/otraffic.hpp"
 #include "engine/outils.hpp"
 #include "cannonboard/interface.hpp"
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
 
 Outrun outrun;
 
@@ -79,20 +83,29 @@ void Outrun::init()
     if (config.cannonboard.enabled && config.cannonboard.cabinet == config.cannonboard.CABINET_MOVING)
         init_motor_calibration();
     else
+    {        
         boot();
+    }
 }
 
 void Outrun::boot()
 {
     game_state = config.engine.layout_debug ? GS_INIT_GAME : GS_INIT;
     // Initialize default hi-score entries
+ 
     ohiscore.init_def_scores();
     // Load saved hi-score entries
+  
     config.load_scores(cannonball_mode == Outrun::MODE_ORIGINAL ? FILENAME_SCORES : FILENAME_CONT);        
+   
     ostats.init(cannonball_mode == MODE_TTRIAL);
+    
     init_jump_table();
+ 
     oinitengine.init(cannonball_mode == MODE_TTRIAL ? ttrial.level : 0);
+ 
     osoundint.init();
+ 
     outils::reset_random_seed(); // Ensure we match the genuine boot up of the original game each time
 }
 
@@ -119,8 +132,8 @@ void Outrun::tick(Packet* packet, bool tick_frame)
     // The timing here isn't perfect, as normally the road CPU would run in parallel with the main CPU.
     // We can potentially hack this by calling the road CPU twice.
     // Most noticeable with clipping sprites on hills.
-      
-    // 30 FPS 
+
+    // 30 FPS
     // Updates Game Logic 1/2 frames
     // Updates V-Blank 1/2 frames
     if (config.fps == 30 && config.tick_fps == 30)
@@ -142,7 +155,7 @@ void Outrun::tick(Packet* packet, bool tick_frame)
         }
         vint();
     }
-    // 60 FPS. Smooth Mode. 
+    // 60 FPS. Smooth Mode.
     // Updates Game Logic 1/1 frames
     // Updates V-Blank 1/1 frames
     else
@@ -292,7 +305,7 @@ void Outrun::jump_table(Packet* packet)
         ohud.blit_text_new(x, y, "AI0 ACCEL");   ohud.blit_text_new(x + 10, y, Utils::to_hex_string(packet->ai0).c_str(), OHud::PINK); x += 13;
         ohud.blit_text_new(x, y, "AI2 WHEEL");   ohud.blit_text_new(x + 10, y, Utils::to_hex_string(packet->ai2).c_str(), OHud::PINK); x += 13;
         ohud.blit_text_new(x, y, "AI3 BRAKE");   ohud.blit_text_new(x + 10, y, Utils::to_hex_string(packet->ai3).c_str(), OHud::PINK); x += 13;
-      
+
         x = 1;
         y = 6;
         ohud.blit_text_new(x, y, "AI1 MOTOR"); ohud.blit_text_new(x + 10, y, Utils::to_hex_string(packet->ai1).c_str(), OHud::PINK); x += 13;
@@ -411,7 +424,7 @@ void Outrun::main_switch()
             oroad.tick();
             osoundint.queue_sound(sound::STOP_CHEERS);
             osoundint.queue_sound(sound::VOICE_GETREADY);
-            
+            SND_SetFX(FXGETREADY);
             #ifdef COMPILE_SOUND_CODE
             if (omusic.music_selected >= 0 && omusic.music_selected <= 2)
             {
@@ -443,6 +456,7 @@ void Outrun::main_switch()
             if (--ostats.frame_counter < 0)
             {
                 osoundint.queue_sound(sound::SIGNAL1);
+                SND_SetFX(FXSIGNAL1);
                 ostats.frame_counter = ostats.frame_reset;
                 game_state++;
             }
@@ -457,6 +471,7 @@ void Outrun::main_switch()
                 }
 
                 osoundint.queue_sound(sound::SIGNAL2);
+                SND_SetFX(FXSIGNAL2);                
                 osoundint.queue_sound(sound::STOP_CHEERS);
                 ostats.frame_counter = ostats.frame_reset;
                 game_state++;

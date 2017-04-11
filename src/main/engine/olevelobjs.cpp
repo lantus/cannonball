@@ -19,6 +19,11 @@
 #include "engine/olevelobjs.hpp"
 #include "engine/ostats.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 OLevelObjs olevelobjs;
 
 OLevelObjs::OLevelObjs(void)

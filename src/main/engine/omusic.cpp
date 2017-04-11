@@ -16,12 +16,18 @@
 #include "engine/otraffic.hpp"
 #include "engine/ostats.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 OMusic omusic;
 
 OMusic::OMusic(void)
 {
     tilemap    = NULL;
     tile_patch = NULL;
+    mod = NULL;    
 }
 
 
@@ -29,6 +35,13 @@ OMusic::~OMusic(void)
 {
     if (tilemap)    delete tilemap;
     if (tile_patch) delete tile_patch;
+    
+    if (mod)
+    {
+        SND_StopModule();
+        SND_EjectModule(mod);
+        mod = NULL;
+    }
 }
 
 // Load Modified Widescreen version of tilemap
@@ -233,6 +246,7 @@ void OMusic::tick()
     oentry *e2 = &osprites.jump_table[entry_start + 3];
     oentry *hand = &osprites.jump_table[entry_start + 4];
 
+
     // Steer Left
     if (oinputs.steering_adjust + 0x80 <= 0x55)
     {                
@@ -253,6 +267,7 @@ void OMusic::tick()
             video.write_text32(0x1105C0, NOTE_TILES1);
             video.write_text32(0x110640, NOTE_TILES2);
             music_selected = sound::MUSIC_MAGICAL;
+           
         }
     }
     // Centre
@@ -275,6 +290,7 @@ void OMusic::tick()
             video.write_text32(0x1105C6, NOTE_TILES1);
             video.write_text32(0x110646, NOTE_TILES2);
             music_selected = sound::MUSIC_BREEZE;
+     
         }
     }
     // Steer Right
@@ -297,9 +313,10 @@ void OMusic::tick()
             video.write_text32(0x1105C8, NOTE_TILES1);
             video.write_text32(0x110648, NOTE_TILES2);
             music_selected = sound::MUSIC_SPLASH;
+ 
         }
     }
-
+ 
     osprites.do_spr_order_shadows(e);
     osprites.do_spr_order_shadows(e2);
     osprites.do_spr_order_shadows(hand);
@@ -309,6 +326,35 @@ void OMusic::tick()
     {
         if (music_selected != last_music_selected)
         {
+            if (mod)
+            {
+                SND_StopModule();
+                SND_EjectModule(mod);            
+                mod = NULL;
+            }
+            
+            switch (music_selected)
+            {
+                // Cycle in-built sounds
+                case sound::MUSIC_BREEZE:
+                    mod = SND_LoadModule("data/outrun_1.mod");
+                    SND_SetFXChannel(2);
+                    SND_PlayModule(mod);
+                    break;
+                case sound::MUSIC_SPLASH:
+                    mod = SND_LoadModule("data/outrun_2.mod");
+                    SND_SetFXChannel(2);                    
+                    SND_PlayModule(mod);
+                    break;
+                case sound::MUSIC_MAGICAL:
+                    mod = SND_LoadModule("data/outrun_3.mod");
+                    SND_SetFXChannel(2);                    
+                    SND_PlayModule(mod);
+                    break;
+            }
+                    
+           
+            
             if (preview_counter == 0 && last_music_selected != -1)
                 osoundint.queue_sound(sound::FM_RESET);
 

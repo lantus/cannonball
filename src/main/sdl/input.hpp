@@ -76,7 +76,7 @@ private:
     static const int CENTRE = 0x80;
 
     // Digital Dead Zone
-    static const int DIGITAL_DEAD = 3200;
+    static const int DIGITAL_DEAD = 127;
 
     // SDL Joystick / Keypad
     SDL_Joystick *stick;

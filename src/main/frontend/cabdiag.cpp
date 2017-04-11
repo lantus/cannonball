@@ -25,9 +25,9 @@
 #include "utils.hpp"
 #include "../video.hpp"
 #include "../cannonboard/interface.hpp"
-#include "../engine/outrun.hpp"
 #include "../engine/ooutputs.hpp"
 #include "../engine/ohud.hpp"
+#include "../engine/oroad.hpp"
 #include "../engine/otiles.hpp"
 
 const static uint32_t PAL_CRT[] = {0xF, 0xF000FF, 0xF000F0F, 0xFF00FFF, 0xFFF, 0xEEE0DDD, 0xCCC0BBB,

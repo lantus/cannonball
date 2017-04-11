@@ -14,6 +14,10 @@
 #include "../trackloader.hpp"
 #include "engine/opalette.hpp"
 #include "engine/otiles.hpp"
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
 
 OTiles otiles;
 

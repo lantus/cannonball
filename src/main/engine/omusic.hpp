@@ -11,6 +11,11 @@
 
 #include "outrun.hpp"
 
+#include "Sound.h"
+#define  FXCHANNEL 2	/* put FX on this channel (1...4) */
+
+
+
 class RomLoader;
 
 class OMusic
@@ -28,6 +33,8 @@ public:
     void tick();
     void blit();
     void check_start();
+
+    unsigned char *mod;
 
 private:
     // Modified Widescreen version of the Music Select Tilemap

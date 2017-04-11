@@ -33,7 +33,7 @@ void OSoundInt::init()
         pcm = new SegaPCM(SOUND_CLOCK, &roms.pcm, pcm_ram, SegaPCM::BANK_512);       
 
     if (ym == NULL)
-        ym = new YM2151(0.5f, SOUND_CLOCK);
+      ym = new YM2151(0.5f, SOUND_CLOCK);
 
     pcm->init(config.fps);
     ym->init(44100, config.fps);
@@ -48,6 +48,7 @@ void OSoundInt::init()
         engine_data[i] = 0;
 
     osound.init(ym, pcm_ram);
+       
 }
 
 // Clear sound queue
@@ -62,23 +63,26 @@ void OSoundInt::reset()
 
 void OSoundInt::tick()
 {
+//    play_queued_sound();
+//    osound.tick();
+    /*
     if (config.fps == 30)
     {
-        play_queued_sound(); // Process audio commands from main program code
+    //    play_queued_sound(); // Process audio commands from main program code
         osound.tick();
-        play_queued_sound();
-        osound.tick();
-        play_queued_sound();
-        osound.tick();
-        play_queued_sound();
-        osound.tick();
+        //play_queued_sound();
+        //osound.tick();
+        //play_queued_sound();
+        //osound.tick();
+        //play_queued_sound();
+        //osound.tick();
     }
     else if (config.fps == 60)
     {
         play_queued_sound(); // Process audio commands from main program code
         osound.tick();
         osound.tick();
-    }
+    } */
 }
 
 // ----------------------------------------------------------------------------
@@ -98,7 +102,7 @@ void OSoundInt::play_queued_sound()
     }
 
     // Process the lot in one go. 
-    for (int counter = 0; counter < 8; counter++)
+    for (int counter = 1; counter < 8; counter++)
     {
         // Process queued sound
         if (counter == 0)
@@ -115,10 +119,10 @@ void OSoundInt::play_queued_sound()
             }
         }
         // Process player engine sounds and passing traffic
-        else
-        {
-            osound.engine_data[counter] = engine_data[counter];
-        }
+//        else
+//        {
+//            osound.engine_data[counter] = engine_data[counter];
+//        }
     }
 }
 

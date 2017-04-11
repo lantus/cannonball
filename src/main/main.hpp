@@ -41,3 +41,4 @@ namespace cannonball
         STATE_QUIT
     };
 }
+

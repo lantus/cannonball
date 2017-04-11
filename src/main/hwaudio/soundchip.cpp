@@ -1,7 +1,7 @@
 /***************************************************************************
     Sound Chip  
 
-    This is an abstract class, used by the Sega PCM and YM2151 chips.
+    This is an abstract class, used by the Sega PCM and xYM2151 chips.
     It facilitates writing to a buffer of sound data.
 
     Copyright Chris White.

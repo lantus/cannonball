@@ -13,10 +13,17 @@
     See license.txt for more details.
 ***************************************************************************/
 
+#include "stdint.hpp"
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
 #include "engine/obonus.hpp"
 #include "engine/oferrari.hpp"
 #include "engine/oinputs.hpp"
 #include "engine/oanimseq.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
+#include "Sound.h"
 
 // ----------------------------------------------------------------------------
 // Animation Data Format.
@@ -512,6 +519,7 @@ void OAnimSeq::anim_seq_outro_ferrari()
         else
         {
             osoundint.queue_sound(sound::VOICE_CONGRATS);
+            SND_SetFX(FXCONGRATS);
             ferrari_stopped = true;
         }
     }

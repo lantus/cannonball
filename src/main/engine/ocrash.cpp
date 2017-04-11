@@ -27,6 +27,11 @@
 #include "engine/outils.hpp"
 #include "engine/ocrash.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 OCrash ocrash;
 
 OCrash::OCrash(void)

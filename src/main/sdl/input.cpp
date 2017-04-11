@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <cstdlib> // abs
+#include "stdint.hpp"
 #include "sdl/input.hpp"
 
 Input input;
@@ -147,7 +148,7 @@ void Input::handle_key(const int key, const bool is_pressed)
 void Input::handle_joy_axis(SDL_JoyAxisEvent* evt)
 {
     int16_t value = evt->value;
-
+ 
     // Digital Controls
     if (!analog)
     {
@@ -159,7 +160,8 @@ void Input::handle_joy_axis(SDL_JoyAxisEvent* evt)
             {
                 keys[LEFT]  = false;
                 keys[RIGHT] = false;
-            }
+  
+             }
             else if (value < 0)
             {
                 keys[LEFT] = true;
@@ -177,14 +179,19 @@ void Input::handle_joy_axis(SDL_JoyAxisEvent* evt)
             {
                 keys[UP]  = false;
                 keys[DOWN] = false;
+                keys[GEAR1]  = false;
+                keys[GEAR2]  = false;
+                
             }
             else if (value < 0)
             {
-                keys[UP] = true;
+                keys[UP] = keys[GEAR1] = true;
+                
+                
             }
             else if (value > 0)
             {
-                keys[DOWN] = true;
+                keys[DOWN] = keys[GEAR2] = true;
             }
         }
     }

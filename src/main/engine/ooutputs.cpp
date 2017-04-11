@@ -20,14 +20,14 @@
 #include <cstdlib> // abs
 
 #include "utils.hpp"
-
-#include "engine/outrun.hpp"
+ 
 #include "engine/ocrash.hpp"
 #include "engine/oferrari.hpp"
-#include "engine/ohud.hpp"
 #include "engine/oinputs.hpp"
 #include "engine/ooutputs.hpp"
 #include "directx/ffeedback.hpp"
+#include "engine/oinitengine.hpp"
+#include "engine/ohud.hpp"
 
 OOutputs::OOutputs(void)
 {

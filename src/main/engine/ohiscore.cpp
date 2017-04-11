@@ -14,6 +14,14 @@
 #include "engine/outils.hpp"
 #include "engine/ohiscore.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
+#include "engine/omusic.hpp"
+#include "Sound.h"
+
 OHiScore ohiscore;
 
 OHiScore::OHiScore(void)
@@ -96,7 +104,7 @@ void OHiScore::init_def_scores()
 //
 // Source: 0xD1C4
 void OHiScore::tick()
-{
+{     
     switch (state & 3)
     {
         // Detect Score Position, Insert Score, Init Table
@@ -112,7 +120,17 @@ void OHiScore::tick()
                     cannonball::audio.load_wav(config.sound.custom_music[3].filename.c_str());
                 else
                 #endif
-                osoundint.queue_sound(sound::MUSIC_LASTWAVE);
+//                osoundint.queue_sound(sound::MUSIC_LASTWAVE);
+
+                if (omusic.mod)
+                {
+                    SND_StopModule();
+                    SND_EjectModule(omusic.mod);
+                    omusic.mod = NULL;                    
+                    
+                }
+                omusic.mod = SND_LoadModule("data/lastwave.mod");                 
+                SND_PlayModule(omusic.mod);                
                 insert_score();               
             }
             // Not a High Score

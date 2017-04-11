@@ -12,6 +12,8 @@
 #include "engine/ohud.hpp"
 #include "engine/oinputs.hpp"
 #include "engine/opalette.hpp"
+#include "engine/oroad.hpp"
+#include "engine/oinitengine.hpp"
 
 OPalette opalette;
 

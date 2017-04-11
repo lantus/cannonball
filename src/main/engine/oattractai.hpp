@@ -60,3 +60,4 @@ private:
 };
 
 extern OAttractAI oattractai;
+

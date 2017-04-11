@@ -51,8 +51,8 @@ Audio::~Audio()
 
 void Audio::init()
 {
-    if (config.sound.enabled)
-        start_audio();
+   // if (config.sound.enabled)
+   //     start_audio();
 }
 
 void Audio::start_audio()
@@ -170,11 +170,11 @@ void Audio::tick()
 
     // Update audio streams from PCM & YM Devices
     osoundint.pcm->stream_update();
-    osoundint.ym->stream_update();
+    //osoundint.ym->stream_update();
 
     // Get the audio buffers we've just output
     int16_t *pcm_buffer = osoundint.pcm->get_buffer();
-    int16_t *ym_buffer  = osoundint.ym->get_buffer();
+    //int16_t *ym_buffer  = osoundint.ym->get_buffer();
     int16_t *wav_buffer = wavfile.data;
 
     int samples_written = osoundint.pcm->buffer_size;
@@ -182,7 +182,7 @@ void Audio::tick()
     // And mix them into the mix_buffer
     for (int i = 0; i < samples_written; i++)
     {
-        int32_t mix_data = wav_buffer[wavfile.pos] + pcm_buffer[i] + ym_buffer[i];
+        int32_t mix_data = wav_buffer[wavfile.pos] + pcm_buffer[i];
 
         // Clip mix data
         if (mix_data >= (1 << 15))
@@ -216,21 +216,21 @@ void Audio::tick()
     while (gap + bytes_written > dsp_buffer_bytes) 
     {
         // then we allow the callback to run..
-        SDL_UnlockAudio();
+        //SDL_UnlockAudio();
         // and delay until it runs and allows space.
-        SDL_Delay(1);
-        SDL_LockAudio();
+        //SDL_Delay(1);
+        //SDL_LockAudio();
         //printf("sound buffer overflow:%d %d\n",gap, dsp_buffer_bytes);
         gap = dsp_write_pos - dsp_read_pos;
     }
     // now we copy the data into the buffer and adjust the positions
     newpos = dsp_write_pos + bytes_written;
-    if (newpos/dsp_buffer_bytes == dsp_write_pos/dsp_buffer_bytes) 
+    if (newpos/dsp_buffer_bytes == dsp_write_pos/dsp_buffer_bytes)
     {
         // no wrap
         memcpy(dsp_buffer+(dsp_write_pos%dsp_buffer_bytes), mbuf8, bytes_written);
     }
-    else 
+    else
     {
         // wraps
         int first_part_size = dsp_buffer_bytes - (dsp_write_pos%dsp_buffer_bytes);
@@ -243,11 +243,7 @@ void Audio::tick()
     if (callbacktick == 0)
         dsp_read_pos += bytes_written;
 
-    while (dsp_read_pos > dsp_buffer_bytes) 
-    {
-        dsp_write_pos -= dsp_buffer_bytes;
-        dsp_read_pos -= dsp_buffer_bytes;
-    }
+    
     SDL_UnlockAudio();
 }
 

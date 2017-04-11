@@ -180,3 +180,4 @@ private:
 };
 
 extern OSprites osprites;
+

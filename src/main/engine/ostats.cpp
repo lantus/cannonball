@@ -14,6 +14,10 @@
 #include "engine/outils.hpp"
 #include "engine/ostats.hpp"
 #include "engine/otraffic.hpp"
+#include "engine/oroad.hpp"
+#include "engine/oinitengine.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
 
 OStats ostats;
 
@@ -222,6 +226,8 @@ void OStats::init_next_level()
         otraffic.set_max_traffic();
         osoundint.queue_sound(sound::YM_CHECKPOINT);
         osoundint.queue_sound(sound::VOICE_CHECKPOINT);
+        
+        SND_SetFX( FXCHECKPOINT ); 
         
         // Update Stage Number on HUD
         ohud.draw_stage_number(0x110d76, cur_stage+1);

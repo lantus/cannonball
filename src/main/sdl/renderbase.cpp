@@ -13,19 +13,8 @@ RenderBase::RenderBase()
 // Setup screen size
 bool RenderBase::sdl_screen_size()
 {
-    if (orig_width == 0 || orig_height == 0)
-    {
-        const SDL_VideoInfo* info = SDL_GetVideoInfo();
-
-        if (!info)
-        {
-            std::cerr << "Video query failed: " << SDL_GetError() << std::endl;
-            return false;
-        }
-        
-        orig_width  = info->current_w; 
-        orig_height = info->current_h;
-    }
+    orig_width  = 320;
+    orig_height = 240;
 
     scn_width  = orig_width;
     scn_height = orig_height;

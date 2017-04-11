@@ -18,6 +18,11 @@
 #include "engine/otraffic.hpp"
 #include "engine/ostats.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 OMap omap;
 
 // Position of Ferrari in Jump Table

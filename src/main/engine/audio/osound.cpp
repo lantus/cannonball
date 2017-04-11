@@ -19,6 +19,8 @@ X More cars seem to be high pitched than on MAME. (Fixed - engine channel setup)
 #include <cstring> // For memset on GCC
 #include "engine/audio/osound.hpp"
 
+#include "Sound.h"
+
 // Use YM2151 Timing
 #define TIMER_CODE 1
 
@@ -77,11 +79,11 @@ void OSound::init_fm_chip()
 
 void OSound::tick()
 {
-    fm_dotimera();          // FM: Process Timer A. Stop Timer B
+    //fm_dotimera();          // FM: Process Timer A. Stop Timer B
     process_command();      // Process Command sent by main program code (originally the main 68k processor)
-    process_channels();     // Run logic on individual sound channel (both YM & PCM channels)
-    engine_process();       // Ferrari Engine Tone & Traffic Noise
-    traffic_process();      // Traffic Volume/Panning & Pitch
+//    process_channels();     // Run logic on individual sound channel (both YM & PCM channels)
+//    engine_process();       // Ferrari Engine Tone & Traffic Noise
+//    traffic_process();      // Traffic Volume/Panning & Pitch
 }
 
 // PCM RAM Read/Write Helper Functions
@@ -125,9 +127,10 @@ void OSound::process_command()
     }
     else
     {
+       
         uint8_t cmd   = command_input;
         command_input = sound::RESET;
-
+ 
         switch (cmd)
         {
             case sound::RESET:
@@ -151,6 +154,7 @@ void OSound::process_command()
 
             case sound::COIN_IN:
                 init_sound(cmd, DATA_COININ, channel::YM_FX1);
+                SND_SetFX( FXCOININ );
                 break;
 
             case sound::MUSIC_MAGICAL:
@@ -163,6 +167,7 @@ void OSound::process_command()
 
             case sound::YM_CHECKPOINT:
                 init_sound(cmd, DATA_CHECKPOINT, channel::YM_FX1);
+                SND_SetFX( FXCHECKPOINT );
                 break;
 
             case sound::INIT_SLIP:
@@ -198,11 +203,13 @@ void OSound::process_command()
 
             case sound::SIGNAL1:
                 init_sound(cmd, DATA_SIGNAL1, channel::YM_FX1);
+                SND_SetFX( FXSIGNAL1 );                
                 break;
 
             case sound::SIGNAL2:
                 sound_props &= ~BIT_0; // Clear rev effect
                 init_sound(cmd, DATA_SIGNAL2, channel::YM_FX1);
+                SND_SetFX( FXSIGNAL2 );                                
                 break;
 
             case sound::INIT_WEIRD:
@@ -223,6 +230,7 @@ void OSound::process_command()
 
             case sound::BEEP1:
                 init_sound(cmd, DATA_BEEP1, channel::YM_FX1);
+                SND_SetFX( FXSIGNAL1 ); 
                 break;
 
             case sound::UFO:
@@ -233,6 +241,7 @@ void OSound::process_command()
             case sound::BEEP2:
                 fm_reset();
                 init_sound(cmd, DATA_BEEP2, channel::YM1);
+                SND_SetFX( FXSIGNAL2 ); 
                 break;
 
             case sound::INIT_CHEERS2:
@@ -242,6 +251,7 @@ void OSound::process_command()
             case sound::VOICE_CHECKPOINT:
                 pcm_backup();
                 init_sound(cmd, DATA_VOICE1, channel::PCM_FX7);
+                SND_SetFX( FXCHECKPOINT );                
                 break;
 
             case sound::VOICE_CONGRATS:
@@ -252,6 +262,7 @@ void OSound::process_command()
             case sound::VOICE_GETREADY:
                 pcm_backup();
                 init_sound(cmd, DATA_VOICE3, channel::PCM_FX7);
+                //SND_SetFX( FXGETREADY );                
                 break;
 
             case sound::INIT_SAFETYZONE:
@@ -805,6 +816,8 @@ void OSound::play_pcm_index(uint8_t* chan, uint8_t cmd)
 // Source: 0x9E8
 void OSound::init_sound(uint8_t cmd, uint16_t src, uint16_t dst)
 {
+    
+
     uint16_t dst_backup = dst;
 
     command_index = cmd - 0x81;

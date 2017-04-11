@@ -11,6 +11,8 @@
 #include "engine/oferrari.hpp"
 #include "engine/olevelobjs.hpp"
 #include "engine/osmoke.hpp"
+#include "engine/oroad.hpp"
+#include "engine/oinitengine.hpp"
 
 OSmoke osmoke;
 

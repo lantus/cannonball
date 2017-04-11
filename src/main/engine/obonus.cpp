@@ -12,6 +12,11 @@
 #include "engine/outils.hpp"
 #include "engine/obonus.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 OBonus obonus;
 
 OBonus::OBonus(void)

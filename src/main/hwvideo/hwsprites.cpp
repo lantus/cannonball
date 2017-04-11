@@ -148,7 +148,7 @@ void hwsprites::swap()
             pPixel[x] &= 0xfff;                                                                       \
             pPixel[x] += ((S16_PALETTE_ENTRIES * 2) - ((video.read_pal16(pPixel[x]) & 0x8000) >> 3)); \
         }                                                                                             \
-        else                                                                                          \
+        else                                                                                           \
         {                                                                                             \
             pPixel[x] = (pix | color);                                                                \
         }                                                                                             \

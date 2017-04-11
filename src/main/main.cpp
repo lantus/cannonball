@@ -16,6 +16,8 @@
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "glu32.lib")
 
+#include "stdint.hpp"
+
 // SDL Specific Code
 #if defined SDL2
 #include "sdl2/timer.hpp"
@@ -29,30 +31,60 @@
 
 #include "romloader.hpp"
 #include "trackloader.hpp"
-#include "stdint.hpp"
+
 #include "main.hpp"
 #include "setup.hpp"
-#include "engine/outrun.hpp"
+//#include "engine/outrun.hpp"
 #include "frontend/config.hpp"
 #include "frontend/menu.hpp"
 
 #include "cannonboard/interface.hpp"
 #include "engine/oinputs.hpp"
 #include "engine/ooutputs.hpp"
-#include "engine/omusic.hpp"
+//#include "engine/omusic.hpp"
 
 // Direct X Haptic Support.
 // Fine to include on non-windows builds as dummy functions used.
 #include "directx/ffeedback.hpp"
 
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp" 
+
+
+#include "Sound.h"
+#define  FXCHANNEL 2	/* put FX on this channel (1...4) */
+ 
 // Initialize Shared Variables
 using namespace cannonball;
+using namespace std;
 
 int    cannonball::state       = STATE_BOOT;
 double cannonball::frame_ms    = 0;
 int    cannonball::frame       = 0;
 bool   cannonball::tick_frame  = true;
 int    cannonball::fps_counter = 0;
+
+extern "C" int kprintf (char *fmt, ... );
+
+int kprintf (char *fmt, ... )
+{
+    return 0;
+}
+
+int getc(FILE *stream)
+{
+    return 0;   
+}
+
+int putc ( int character, FILE * stream )
+{
+    return 0;   
+}
+
+FILE *fdopen(int fildes, const char *mode)
+{
+    return NULL;   
+}
 
 #ifdef COMPILE_SOUND_CODE
 Audio cannonball::audio;
@@ -122,8 +154,10 @@ static void tick()
     frame++;
 
     // Get CannonBoard Packet Data
+            
     Packet* packet = config.cannonboard.enabled ? cannonboard.get_packet() : NULL;
 
+        
     // Non standard FPS.
     // Determine whether to tick the current frame.
     if (config.fps != 30)
@@ -134,12 +168,15 @@ static void tick()
             tick_frame = (frame & 3) == 1;
     }
 
+      
     process_events();
+     
 
     if (tick_frame)
         oinputs.tick(packet); // Do Controls
     oinputs.do_gear();        // Digital Gear
 
+       
     switch (state)
     {
         case STATE_GAME:
@@ -180,7 +217,9 @@ static void tick()
             else
             {
                 pause_engine = false;
+                
                 outrun.init();
+                        
                 state = STATE_GAME;
             }
             break;
@@ -208,7 +247,7 @@ static void tick()
     // Write CannonBoard Outputs
     if (config.cannonboard.enabled)
         cannonboard.write(outrun.outputs->dig_out, outrun.outputs->hw_motor_control);
-
+     
     // Draw SDL Video
     video.draw_frame();  
 }
@@ -225,7 +264,7 @@ static void main_loop()
     int t;
     double deltatime  = 0;
     int deltaintegral = 0;
-
+     
     while (state != STATE_QUIT)
     {
         frame_time.start();
@@ -293,6 +332,7 @@ int main(int argc, char* argv[])
     if (loaded)
     {
         // Load XML Config
+        config.init();
         config.load(FILENAME_CONFIG);
 
         // Load fixed PCM ROM based on config
@@ -300,12 +340,12 @@ int main(int argc, char* argv[])
             roms.load_pcm_rom(true);
 
         // Load patched widescreen tilemaps
-        if (!omusic.load_widescreen_map())
-            std::cout << "Unable to load widescreen tilemaps" << std::endl;
+      //  if (!omusic.load_widescreen_map())
+      //      std::cout << "Unable to load widescreen tilemaps" << std::endl;
 
 #ifndef SDL2
         //Set the window caption 
-        SDL_WM_SetCaption( "Cannonball", NULL ); 
+       // SDL_WM_SetCaption( "Cannonball", NULL ); 
 #endif
 
         // Initialize SDL Video
@@ -315,6 +355,8 @@ int main(int argc, char* argv[])
 #ifdef COMPILE_SOUND_CODE
         audio.init();
 #endif
+        
+ 
         state = config.menu.enabled ? STATE_INIT_MENU : STATE_INIT_GAME;
 
         // Initalize controls
@@ -333,8 +375,9 @@ int main(int argc, char* argv[])
         }
 
         // Populate menus
-        menu->populate();
+        menu->populate();                          
         main_loop();  // Loop until we quit the app
+    
     }
     else
     {
@@ -344,3 +387,4 @@ int main(int argc, char* argv[])
     // Never Reached
     return 0;
 }
+

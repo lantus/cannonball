@@ -20,6 +20,11 @@
 #include "engine/ooutputs.hpp"
 #include "engine/ostats.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 OHud ohud;
 
 OHud::OHud(void)
@@ -699,14 +704,14 @@ void OHud::blit_text_big(const uint8_t Y, const char* text, bool do_notes)
         }
         // Normal character
         if (c >= 'A' && c <= 'Z')
-        {           
+        {
             const uint16_t pal = do_notes ? 0x8AA0 : 0x8CA0;
             // Convert character to real index (D0-0x41) so A is 0x01
             c -= 0x41;
             c = (c * 2);
             video.write_text16(&dst_addr,       c + pal);     // Write first row to text ram
             video.write_text16(0x7E + dst_addr, c + pal + 1); // Write second row to text ram
-        }       
+        }
     }
 }
 
@@ -719,7 +724,7 @@ void OHud::blit_text_big(const uint8_t Y, const char* text, bool do_notes)
 // Normal font: 41 onwards
 void OHud::blit_text_new(uint16_t x, uint16_t y, const char* text, uint16_t pal)
 {
-    uint32_t dst_addr = translate(x, y); 
+    uint32_t dst_addr = translate(x, y);
     uint16_t length = strlen(text);
 
     for (uint16_t i = 0; i < length; i++)

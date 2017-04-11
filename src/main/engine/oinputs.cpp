@@ -14,7 +14,14 @@
 #include "engine/oinputs.hpp"
 #include "engine/ostats.hpp"
 
+#include "engine/oinitengine.hpp"
+#include "engine/oroad.hpp"
+#include "engine/audio/osoundint.hpp"
+#include "engine/audio/osound.hpp"
+
 #include "cannonboard/interface.hpp"
+
+#include "Sound.h"
 
 OInputs oinputs;
 
@@ -286,6 +293,7 @@ uint8_t OInputs::do_credits()
             ostats.credits++;
             // todo: Increment credits total for bookkeeping
             osoundint.queue_sound(sound::COIN_IN);
+            SND_SetFX(FXCOININ);
         }
         return 3;
     }
@@ -296,6 +304,7 @@ uint8_t OInputs::do_credits()
         {
             ostats.credits++;
             osoundint.queue_sound(sound::COIN_IN);
+            SND_SetFX(FXCOININ);            
         }
         return 1;
     }
@@ -306,6 +315,7 @@ uint8_t OInputs::do_credits()
         {
             ostats.credits++;
             osoundint.queue_sound(sound::COIN_IN);
+            SND_SetFX(FXCOININ);            
         }
         return 2;
     }

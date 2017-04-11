@@ -73,3 +73,4 @@ private:
 };
 
 extern OAnimSeq oanimseq;
+
